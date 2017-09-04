@@ -11,8 +11,11 @@
 		body{
 			margin: 0;
 			padding: 0;
+		}
+		#MusicPage{
 			background:url("images/01.jpg") no-repeat;
 			background-size: 100% 100%;
+			display:inline-block;
 		}
 		.title{
 			font-size: 0.7rem;
@@ -20,15 +23,22 @@
 			margin:0.5rem auto;
 			text-align: center;
 		}
-		.musician{
+		.author{
 			font-size: 0.4rem;
 			line-height: 0.6rem;
 			margin:0.2rem auto;
 			text-align: center;
 		}
+		section{
+			position: relative;
+			width: 10rem;
+		}
+		.cover{
+			padding:1rem 0 1rem 0; 
+		}
 		.box{
-			width: 8.6rem;
-			height: 8.6rem;
+			width: 8rem;
+			height: 8rem;
 			border: solid 1px black;
 			margin:0 auto;
 			border-radius: 50%;
@@ -45,90 +55,119 @@
 			
 		}
 		.coverbg{
-			width: 8rem;
-			height: 8rem;
+			width: 7.4rem;
+			height: 7.4rem;
 			border: solid 1px black;
 			margin:0.3rem auto;	
 			border-radius: 50%;
 			overflow: hidden;
-			background: url("images/logo.jpg");
+			background: #fff;
+		}
+		.coverbg img{
+			width: 7rem;
+			height: 7rem;
+			margin: 0.2rem;
+			border-radius: 50%;
 		}
 		.progress{
-			width: 9rem;
+			position: absolute;
+			top: 15rem;
+		}
+		#timer{
+			position: absolute;
+			top: -0.07rem;
+			height: 0.3rem;
+			font-size: 0.3rem;
+			padding-left: 0.3rem;
+			display: block;
+		}
+		#timer2{
+			position: absolute;
+			top: -0.07rem;
+			right: 0.3rem;
+			height: 0.3rem;
+			font-size: 0.3rem;
+			display: block;
+		}
+		#progress{
+			position: absolute;
+			left: 1.5rem;
+			width: 7rem;
 			height: 0.2rem;
-			margin: 3.5rem auto 0 auto;
 			border: solid 1px black;
 			border-radius: 0.1rem;
+			background: #c03;
 		}
-		.mProgress{
-			width: 1rem;
+		#mProgress{
+			width: 0rem;
 			height: 0.2rem;
 			border-radius: 0.1rem;
 			background: rgba(64, 241, 64 , 1);
-			float: left;
 		}
-		.ball{
+		#ball{
 			width: 0.4rem;
 			height: 0.4rem;
 			background: #fff;
 			border-radius: 50%;
-			float: left;
-			transform: translateX(-0.2rem)translateY(-0.1rem);
+			transform: translate(-0.2rem,-0.3rem);
 		}
 		.control{
+			position: absolute;
+			top: 16.5rem;
+		}
+		#control{
 			width: 100%;
-			margin:0.5rem auto;
-			display: inline-block;
 		}
 		#volume{
+			position: absolute;
+			top: 50%;
+			left: 10%;
 			width: 0.9rem;
 			height: 0.9rem;
-			margin: 0.5rem;
-			background: rgba(0,0,0,0.3);
-			border-radius: 50%; 
+			margin: -0.45rem 0 0 -0.45rem;
 			line-height:0.7rem;
 			text-align: center;
-			float: left;
 		}
 		#pre{
+			position: absolute;
+			top: 50%;
+			left: 30%;
 			width: 0.9rem;
 			height: 0.9rem;
-			margin: 0.5rem;
-			background: rgba(0,0,0,0.3);
-			border-radius: 50%; 
+			margin: -0.45rem 0 0 -0.45rem;
 			line-height:0.7rem;
 			text-align: center;
-			float: left;
 		}
 		#play{
-			width: 0.9rem;
-			height: 0.9rem;
-			margin: 0.5rem;
-			background: rgba(0,0,0,0.3);
-			border-radius: 50%;
-			line-height:0.7rem;
-			float: left; 
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 1.2rem;
+			height: 1.2rem;
+			margin: -0.6rem 0 0 -0.6rem;
+			line-height:1rem;
 			text-align: center;
 		} 
 		#next{
+			position: absolute;
+			top: 50%;
+			left: 70%;
 			width: 0.9rem;
 			height: 0.9rem;
 			margin: 0.5rem;
-			background: rgba(0,0,0,0.3);
-			border-radius: 50%;
+			margin: -0.45rem 0 0 -0.45rem;
 			line-height:0.7rem;
-			float: left;
 			text-align: center;
 		}
 		#menu{
+			position: absolute;
+			top: 50%;
+			left: 90%;
 			width: 0.9rem;
 			height: 0.9rem;
-			margin: 0.5rem;
-			background: rgba(0,0,0,0.3);
-			border-radius: 50%; 
+			margin: -0.45rem 0 0 -0.45rem;
 			line-height:0.7rem;
 			text-align: center;
-			float: left;
 		}
 		@font-face {
 			font-family: 'iconfont';
@@ -151,35 +190,195 @@
 	</style>
 </head>
 <body>
+	<div id="MusicPage">	
 	<header>
 		<h1 class="title">歌曲名</h1>
-		<h3 class="musician">演唱者</h3>
+		<h3 class="author">演唱者</h3>
 	</header>
-	<section>
+
+	<section class="cover">
 		<div class="box">
 			<div class="coverbg">
-				
+				<img src="images/logo.jpg">
 			</div>
 		</div>
 	</section>
 
-	<section>
-		<div class="progress">
-			<div class="mProgress"></div><!--进度-->
-			<div class="ball"></div><!--小图标-->
+	<section class="progress">
+		<div id="timer">00:00</div>
+		<div id="progress">
+			<div id="mProgress"></div><!--进度-->
+			<div id="ball"></div><!--小图标-->
 		</div>
+		<div id="timer2">00:00</div>
 	</section>
 
-	<section>
-		<div class="control">
+	<section class="control">
+		<div id="control">
 			<div id="volume"><i class="iconfont">&#xe6d2;</i></div>
 			<div id="pre"><i class="iconfont">&#xe501;</i></div>
 			<div id="play"><i class="iconfont">&#xe66f;</i></div>
-			<div id="next"><i class="iconfont">&#xe502;</i></div>
+			<div id="next"><i class="iconfont">&#xe503;</i></div>
 			<div id="menu"><i class="iconfont">&#xe610;</i></div>
 		</div>
 	</section>
 
+	<audio src="mp3/MyEscape.mp3" id="myMusic"></audio>
+	</div> 
+
+
+
+
+
+
+	<script type="text/javascript">
+		//MusicPage
+		var page = document.getElementById("MusicPage");
+		page.style.width = window.innerWidth +"px";
+		page.style.height = window.innerHeight+ "px";
+
+		//header
+		var title = document.getElementsByClassName("title")[0];
+		var author = document.getElementsByClassName("author")[0];
+
+		//coverbg
+		var coverbg = document.getElementsByClassName("box")[0];
+		coverbg.style.animationPlayState = "paused";  
+	    coverbg.style.WebkitAnimationPlayState = "paused";// 针对 Chrome 和 Safari 的代码 
+
+		//progress
+		var timer1 = document.getElementById("timer");
+		var timer2 = document.getElementById("timer2");
+		var progress = document.getElementById("progress");
+		var mprogress = document.getElementById("mProgress");
+		var ball = document.getElementById("ball");
+
+		//control
+		var play = document.getElementById("play");
+		var pre = document.getElementById("pre");
+		var next = document.getElementById("next");
+
+		var myMusic = document.getElementById("myMusic");
+
+		//MusicList
+		var musicList = [
+			{"title":"My Escape","author":"Ravenscode","src":"mp3/MyEscape.mp3"},
+			{"title":"刚好遇见你","author":"李玉刚","src":"mp3/刚好遇见你.mp3"},
+			{"title":"绅士","author":"薛之谦","src":"mp3/绅士.mp3"},
+			{"title":"夏祭り","author":"东山奈央","src":"mp3/夏祭り.mp3"},
+			{"title":"有点甜","author":"汪苏泷","src":"mp3/有点甜.mp3"},
+		];
+
+		var x=0,
+			l=0,
+			_left=0;
+
+
+		function MusicPage() {}
+		MusicPage.prototype = {
+			title : function(i) {
+				title.innerHTML = musicList[i].title;
+				author.innerHTML = musicList[i].author;
+				myMusic.src = musicList[i].src;
+				this.progress();
+			},
+			progress : function() {
+				var me = this;
+				myMusic.addEventListener("timeupdate",function() {
+					var a = me.calculateTime(this.duration);
+					var b = me.calculateTime(this.currentTime);
+					a = /^\d+$/.test(Math.floor(this.duration)) ? a : {h:0,m:0,s:0};
+					timer1.innerHTML = b.s>=10 ? (b.m>=10 ? b.m+":"+b.s : "0"+b.m+":"+b.s) : (b.m>=10 ? b.m+":0"+b.s : "0"+b.m+":0"+b.s) ;
+					timer2.innerHTML = a.s>=10 ? (a.m>=10 ? a.m+":"+a.s : "0"+a.m+":"+a.s) : (a.m>=10 ? a.m+":0"+a.s : "0"+a.m+":0"+a.s) ;
+					var w = progress.offsetWidth ,
+						ballwidth = ball.offsetWidth/2;
+					var s = this.currentTime/this.duration;
+					mprogress.style.width = s*w + "px";
+					ball.style.transform = "translate("+(s*w-ballwidth)+"px,-0.3rem)";
+				});
+
+				ball.addEventListener("touchstart",function(event) {
+					var e = event || window.event;
+					x = e.changedTouches[0].pageX;//手指按下的位置
+					document.addEventListener("touchmove",me.ballmove);
+					document.addEventListener("touchend",function() {
+						document.removeEventListener("touchmove",me.ballmove);
+						l = _left;
+					});
+				});
+			},
+			control : function() {
+				var mine = this;
+				var ii = 0,
+					len = musicList.length;
+				mine.title(ii);
+				var onOFF = true;
+				play.addEventListener("click",function() {
+					//图标变换 play:&#xe658;  pause:&#xe66f;
+					play.firstChild.innerHTML = onOFF?"&#xe658;":"&#xe66f;";
+					//音乐播放控制
+					onOFF?myMusic.play():myMusic.pause();
+					mine.coverbgPause(onOFF);
+					onOFF = !onOFF;
+				});
+
+				pre.addEventListener("click",function() {
+					ii = (ii<=0) ? len : ii;
+					mine.title(--ii);
+					play.firstChild.innerHTML = "&#xe658;";
+					onOFF = true;
+					myMusic.currentTime = 0;
+					myMusic.play();
+					mine.coverbgPause(onOFF);
+				});
+				next.addEventListener("click",function() {
+					mine.title(++ii%musicList.length);
+					play.firstChild.innerHTML = "&#xe658;";
+					onOFF = true;
+					myMusic.currentTime = 0;
+					myMusic.play();
+					mine.coverbgPause(onOFF);
+				});
+
+			},
+			calculateTime : function (mTime) {
+				var musicTime = mTime;
+				var ss = Math.floor(musicTime%60),
+					mm = Math.floor(musicTime/60),
+					hh;
+				if(mm>=60){
+					hh = Math.floor(mm/60);
+					mm = Math.floor(mm%60);
+				}
+				return {
+					h:hh,
+					m:mm,
+					s:ss
+				};
+			},
+			coverbgPause : function(onOff) {
+				if(onOff){
+	     			//继续
+	     			coverbg.style.animationPlayState = "running";  
+	     			coverbg.style.WebkitAnimationPlayState = "running";// 针对 Chrome 和 Safari 的代码 
+				}else{
+					//暂停
+					coverbg.style.animationPlayState = "paused";  
+	     			coverbg.style.WebkitAnimationPlayState = "paused";// 针对 Chrome 和 Safari 的代码 
+				}
+			},
+			ballmove : function(e) {
+				var x1 = e.changedTouches[0].pageX ;
+				_left = x1 - x + l;
+				_left = _left<=0 ? -ball.offsetWidth/2 : (_left>=progress.offsetWidth ? progress.offsetWidth-ball.offsetWidth/2 : _left) ;
+				mprogress.style.width = _left+ball.offsetWidth/2+"px";
+				ball.style.transform = "translate("+_left+"px,-0.3rem)";
+				myMusic.currentTime = _left/progress.offsetWidth*myMusic.duration;
+			}
+		};
+		var a = new MusicPage();
+		a.control();
+	</script>
 
 </body>
 </html>
