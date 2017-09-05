@@ -272,7 +272,8 @@
 		var x=0,
 			l=0,
 			_left=0;
-
+		var ii = 0,
+			len = musicList.length;
 
 		function MusicPage() {}
 		MusicPage.prototype = {
@@ -295,6 +296,15 @@
 					var s = this.currentTime/this.duration;
 					mprogress.style.width = s*w + "px";
 					ball.style.transform = "translate("+(s*w-ballwidth)+"px,-0.3rem)";
+
+
+					if(this.duration == this.currentTime){
+						myMusic.currentTime = 0;
+						me.title(++ii%musicList.length);
+						myMusic.play();
+						me.coverbgPause(1);
+					}
+
 				});
 
 				ball.addEventListener("touchstart",function(event) {
@@ -309,8 +319,6 @@
 			},
 			control : function() {
 				var mine = this;
-				var ii = 0,
-					len = musicList.length;
 				mine.title(ii);
 				var onOFF = true;
 				play.addEventListener("click",function() {
