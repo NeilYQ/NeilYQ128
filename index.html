@@ -204,7 +204,7 @@
 			background: rgba(254,254,254,0.9);
 			position: absolute;
 			bottom: 0;
-			z-index: 2;	
+			z-index: 1;	
 			transform: translateY(335px);
 			transition: 1s;
 		}
@@ -214,7 +214,7 @@
 			background: rgba(0,0,0,0.3);
 			position: absolute;
 			top: 0;
-			z-index: 2;
+			z-index: 1;
 			display: none;
 		}
 		.listHeader{
@@ -380,7 +380,7 @@
 	    		//musiclist
 				musicListPage.style.height = window.innerHeight/2 + "px";
 				mlist.style.height = window.innerHeight/2 - listHeader.offsetHeight + "px";
-				mask.style.height = window.innerHeight + "px";
+				mask.style.height = window.innerHeight/2 + "px";
 
 				this.fixMusicList(musicList);
 			},
@@ -424,7 +424,7 @@
 				var mine = this;
 				mine.title(ii);
 				//音乐播放控制
-				play.addEventListener("click",function() {
+				play.addEventListener("touchstart",function() {
 					//图标变换 play:&#xe502;  pause:&#xe66f;
 					play.firstChild.innerHTML = onOFF?"&#xe502;":"&#xe66f;";
 					onOFF?myMusic.play():myMusic.pause();
@@ -432,25 +432,25 @@
 					onOFF = !onOFF;
 				});
 				//上一首
-				pre.addEventListener("click",function() {
+				pre.addEventListener("touchstart",function() {
 					ii = (ii<=0) ? len : ii;
 					mine.title(--ii);
 					mine.startPlay();
 				});
 				//下一首
-				next.addEventListener("click",function() {
+				next.addEventListener("touchstart",function() {
 					mine.title(++ii%musicList.length);
 					mine.startPlay();
 				});
 				//菜单
-				menu.addEventListener("click",function() {
+				menu.addEventListener("touchstart",function() {
 					musicListPage.style.transform = "translateY("+ 0 +")";
 					setTimeout(function() {
 						mask.style.display = "block";
-					},800);
+					},1100);
 				});
 				//遮幕
-				mask.addEventListener("click",function() {
+				mask.addEventListener("touchstart",function() {
 					mask.style.display = "none";
 					musicListPage.style.transform = "translateY("+ window.innerHeight/2+"px)";
 				});
