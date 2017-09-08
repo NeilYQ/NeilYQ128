@@ -207,6 +207,7 @@
 			z-index: 1;	
 			transform: translateY(335px);
 			transition: 1s;
+			display: none;
 		}
 		.mask{
 			width: 10rem;
@@ -444,6 +445,7 @@
 				});
 				//菜单
 				menu.addEventListener("touchstart",function() {
+					musicListPage.style.display = "block";
 					musicListPage.style.transform = "translateY("+ 0 +")";
 					setTimeout(function() {
 						mask.style.display = "block";
@@ -453,6 +455,7 @@
 				mask.addEventListener("touchstart",function() {
 					mask.style.display = "none";
 					musicListPage.style.transform = "translateY("+ window.innerHeight/2+"px)";
+					musicListPage.style.display = "none";
 				});
 			},
 			startPlay : function() {
