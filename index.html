@@ -20,8 +20,22 @@
 			left: 0;
 			bottom: 0;
 			right: 0;
-			background:url("images/01.jpg") no-repeat center/cover;
 			display:inline-block;
+		}
+		.bg{
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 10rem;
+			height: 100%;
+			background:url("images/01.jpg") no-repeat left/cover;
+			filter:alpha(opacity=50);  
+		    -moz-opacity:0.5;  
+		    -khtml-opacity: 0.5;  
+		    opacity: 0.5;  
+			z-index: -1;
 		}
 		.title{
 			font-size: 0.7rem;
@@ -249,6 +263,8 @@
 </head>
 <body>
 	<div id="MusicPage">	
+		<div class="bg"></div>
+
 		<header>
 			<h1 class="title">歌曲名</h1>
 			<h3 class="author">演唱者</h3>
@@ -289,7 +305,7 @@
 		<section class="listHeader">
 			<div>		
 				<div id="listTitle" class="iconfont">&#xe871;</div>
-				<span>循环列表</span>
+				<span id="styleCtx">循环列表</span>
 			</div>
 		</section>
 		<section class="mlist">
@@ -325,6 +341,13 @@
 			next = document.getElementById("next"),
 			menu = document.getElementById("menu"),
 			playStyle = document.getElementById("playStyle");
+
+		var	playStyleData = [
+			{"style":"&#xe871;","ctx":"循环","key":"0"},
+			{"style":"&#xe615;","ctx":"单曲循环","key":"1"},
+			{"style":"&#xe619;","ctx":"随机","key":"-1"}
+		];
+
 		//audio
 		var myMusic = document.getElementById("myMusic");
 
@@ -345,12 +368,17 @@
 			{"title":"有点甜","author":"汪苏泷","src":"mp3/有点甜.mp3"},
 		];
 
+		//ball
 		var x=0,
 			l=0,
 			_left=0;
+		//musicList
 		var ii = 0,
 			len = musicListData.length;
+		//play
 		var onOFF = true;
+		//playStyle
+		var kk=0;
 
 		function MusicPage() {}
 		MusicPage.prototype = {
@@ -453,14 +481,8 @@
 					})(ij);
 				}
 				//播放样式
-				var playStyleData = [
-					"&#xe871;",//循环
-					"&#xe615;",//单曲循环
-					"&#xe619;"//随机
-				]
-				var kk=0;
 				playStyle.addEventListener('click',function(e) {
-					this.firstChild.innerHTML = playStyleData[++kk%playStyleData.length];
+					this.firstChild.innerHTML = playStyleData[++kk%playStyleData.length].style;
 				});
 			},
 			startPlay : function() {
