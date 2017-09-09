@@ -13,7 +13,6 @@
 			padding: 0;
 			overflow-y: hidden;
 		}
-
 		/*musicpage*/
 		#MusicPage{
 			position: fixed;
@@ -21,10 +20,8 @@
 			left: 0;
 			bottom: 0;
 			right: 0;
-			background:url("images/01.jpg") no-repeat;
-			background-size: 100% 100%;
+			background:url("images/01.jpg") no-repeat center/cover;
 			display:inline-block;
-			z-index: 1;
 		}
 		.title{
 			font-size: 0.7rem;
@@ -55,13 +52,8 @@
 		}
 		@keyframes myfirst
 		{
-			from {
-				transform:rotate(0deg);
-			}
-			to {
-				transform:rotate(360deg);
-			}
-			
+			from {transform:rotate(0deg);}
+			to {transform:rotate(360deg);}
 		}
 		.coverbg{
 			width: 5.4rem;
@@ -127,7 +119,7 @@
 		#control{
 			width: 100%;
 		}
-		#loopplay{
+		#playStyle{
 			position: absolute;
 			top: 50%;
 			left: 10%;
@@ -196,7 +188,6 @@
 		    -webkit-text-stroke-width: 0.2px;
 		    -moz-osx-font-smoothing: grayscale;
 		}
-
 		/*musiclist*/
 		#MusicListPage{
 			width: 10rem;
@@ -204,7 +195,6 @@
 			background: rgba(254,254,254,0.9);
 			position: absolute;
 			bottom: 0;
-			z-index: 1;	
 			transform: translateY(335px);
 			transition: 1s;
 		}
@@ -214,7 +204,6 @@
 			background: rgba(0,0,0,0.3);
 			position: absolute;
 			top: 0;
-			z-index: 1;
 			display: none;
 		}
 		.listHeader{
@@ -222,6 +211,7 @@
 			height: 1rem;
 			background: rgba(255, 247, 223,1);
 			line-height: 1rem;
+			padding-left: 0.2rem;
 		}
 		#listTitle{
 			font-size: 0.5rem;
@@ -283,7 +273,7 @@
 
 		<section class="control">
 			<div id="control">
-				<div id="loopplay"><i class="iconfont">&#xe871;</i></div>
+				<div id="playStyle"><i class="iconfont">&#xe871;</i></div>
 				<div id="pre"><i class="iconfont">&#xe501;</i></div>
 				<div id="play"><i class="iconfont">&#xe66f;</i></div>
 				<div id="next"><i class="iconfont">&#xe503;</i></div>
@@ -304,10 +294,6 @@
 		</section>
 		<section class="mlist">
 			<ul>
-				<li>
-					<span class="musicTitle">MyEscape</span>
-					<span class="musicAuthor">Ravenscode</span>
-				</li>
 			</ul>
 		</section>
 	</div>
@@ -337,7 +323,8 @@
 		var play = document.getElementById("play"),
 			pre = document.getElementById("pre"),
 			next = document.getElementById("next"),
-			menu = document.getElementById("menu");
+			menu = document.getElementById("menu"),
+			playStyle = document.getElementById("playStyle");
 		//audio
 		var myMusic = document.getElementById("myMusic");
 
@@ -346,11 +333,11 @@
 			mask = document.getElementsByClassName("mask")[0],
 			listHeader = document.getElementsByClassName("listHeader")[0],
 			mlist = document.getElementsByClassName("mlist")[0],
-			ul = mlist.children[0];
+			ul = mlist.children[0],
 			musicTitle = document.getElementsByClassName("musicTitle")[0],
 			musicAuthor = document.getElementsByClassName("musicAuthor")[0];
 
-		var musicList = [
+		var musicListData = [
 			{"title":"My Escape","author":"Ravenscode","src":"mp3/MyEscape.mp3"},
 			{"title":"刚好遇见你","author":"李玉刚","src":"mp3/刚好遇见你.mp3"},
 			{"title":"绅士","author":"薛之谦","src":"mp3/绅士.mp3"},
@@ -362,13 +349,12 @@
 			l=0,
 			_left=0;
 		var ii = 0,
-			len = musicList.length;
+			len = musicListData.length;
 		var onOFF = true;
 
 		function MusicPage() {}
 		MusicPage.prototype = {
 			init :function() {
-
 				//musicpage
 				page.style.width = window.innerWidth + "px";
 				page.style.height = window.innerHeight + "px";
@@ -380,14 +366,13 @@
 	    		//musiclist
 				musicListPage.style.height = window.innerHeight/2 + "px";
 				mlist.style.height = window.innerHeight/2 - listHeader.offsetHeight + "px";
-				mask.style.height = window.innerHeight/2 + "px";
-
-				this.fixMusicList(musicList);
+				mask.style.height = window.innerHeight + "px";
+				this.fixMusicList(musicListData);
 			},
 			title : function(i) {
-				title.innerHTML = musicList[i].title;
-				author.innerHTML = musicList[i].author;
-				myMusic.src = musicList[i].src;
+				title.innerHTML = musicListData[i].title;
+				author.innerHTML = musicListData[i].author;
+				myMusic.src = musicListData[i].src;
 				this.progress();
 			},
 			progress : function() {
@@ -405,7 +390,7 @@
 					ball.style.transform = "translate("+(s*w-ballwidth)+"px,-0.25rem)";
 					//播放完毕继续下一首
 					if(this.duration == this.currentTime){
-						me.title(++ii%musicList.length);
+						me.title(++ii%len);
 						me.startPlay();
 					}
 				});
@@ -424,35 +409,58 @@
 				var mine = this;
 				mine.title(ii);
 				//音乐播放控制
-				play.addEventListener("touchstart",function() {
+				play.addEventListener("click",function() {
 					//图标变换 play:&#xe502;  pause:&#xe66f;
-					play.firstChild.innerHTML = onOFF?"&#xe502;":"&#xe66f;";
+					this.firstChild.innerHTML = onOFF?"&#xe502;":"&#xe66f;";
 					onOFF?myMusic.play():myMusic.pause();
 					mine.coverbgPause(onOFF);
 					onOFF = !onOFF;
 				});
 				//上一首
-				pre.addEventListener("touchstart",function() {
+				pre.addEventListener("click",function() {
 					ii = (ii<=0) ? len : ii;
 					mine.title(--ii);
 					mine.startPlay();
 				});
 				//下一首
-				next.addEventListener("touchstart",function() {
-					mine.title(++ii%musicList.length);
+				next.addEventListener("click",function() {
+					mine.title(++ii%len);
 					mine.startPlay();
 				});
 				//菜单
-				menu.addEventListener("touchstart",function() {
+				menu.addEventListener("click",function() {
 					musicListPage.style.transform = "translateY("+ 0 +")";
 					setTimeout(function() {
 						mask.style.display = "block";
 					},1100);
 				});
 				//遮幕
-				mask.addEventListener("touchstart",function() {
+				mask.addEventListener("click",function() {
 					mask.style.display = "none";
 					musicListPage.style.transform = "translateY("+ window.innerHeight/2+"px)";
+				});
+				//歌单点击事件
+				var li = document.querySelectorAll(".mlist ul li");
+				for (var ij = 0 ; ij < len ; ij++) {
+					(function(ij) {
+						li[ij].addEventListener('click',function() {
+							mask.style.display = "none";
+							musicListPage.style.transform = "translateY("+ window.innerHeight/2+"px)";
+							ii = ij;
+							mine.title(ii);
+							mine.startPlay();
+						});
+					})(ij);
+				}
+				//播放样式
+				var playStyleData = [
+					"&#xe871;",//循环
+					"&#xe615;",//单曲循环
+					"&#xe619;"//随机
+				]
+				var kk=0;
+				playStyle.addEventListener('click',function(e) {
+					this.firstChild.innerHTML = playStyleData[++kk%playStyleData.length];
 				});
 			},
 			startPlay : function() {
@@ -497,8 +505,7 @@
 			fixMusicList : function(data) {
 				var str = '';//初始化模版
 				for(i in data){
-					str += 
-					`
+					str += `
 						<li>
 							<span class="musicTitle">${data[i].title}</span>
 							<span>-</span>
