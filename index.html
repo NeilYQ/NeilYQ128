@@ -215,11 +215,11 @@
 			padding-left: 0.2rem;
 		}
 		#listTitle{
-			font-size: 0.5rem;
+			font-size: 0.4rem;
 			float: left;
 		}
 		.listHeader span{
-			font-size: 0.5rem;
+			font-size: 0.4rem;
 			margin: 0;
 			padding: 0;
 			float: left;
@@ -328,9 +328,9 @@
 			playStyle = document.getElementById("playStyle");
 
 		var	playStyleData = [
-			{"style":"&#xe871;","ctx":"循环","key":"0"},
+			{"style":"&#xe871;","ctx":"列表循环","key":"0"},
 			{"style":"&#xe615;","ctx":"单曲循环","key":"1"},
-			{"style":"&#xe619;","ctx":"随机","key":"-1"}
+			{"style":"&#xe619;","ctx":"随机播放","key":"-1"}
 		];
 
 		//audio
@@ -342,6 +342,8 @@
 			listHeader = document.getElementsByClassName("listHeader")[0],
 			mlist = document.getElementsByClassName("mlist")[0],
 			ul = mlist.children[0],
+			listTitle = document.getElementById("listTitle"),
+			styleCtx = document.getElementById("styleCtx"),
 			musicTitle = document.getElementsByClassName("musicTitle")[0],
 			musicAuthor = document.getElementsByClassName("musicAuthor")[0];
 
@@ -380,6 +382,7 @@
 				musicListPage.style.height = window.innerHeight/2 + "px";
 				mlist.style.height = window.innerHeight/2 - listHeader.offsetHeight + "px";
 				mask.style.height = window.innerHeight + "px";
+				styleCtx.innerHTML = playStyleData[0].ctx + "  ("+ len + ")";
 				this.fixMusicList(musicListData);
 			},
 			title : function(i) {
@@ -431,13 +434,12 @@
 				});
 				//上一首
 				pre.addEventListener("click",function() {
-					ii = (ii<=0) ? len : ii;
-					mine.title(--ii);
+					mine.stylePlay(playStyleData[kk].key,0);
 					mine.startPlay();
 				});
 				//下一首
 				next.addEventListener("click",function() {
-					mine.title(++ii%len);
+					mine.stylePlay(playStyleData[kk].key,1);
 					mine.startPlay();
 				});
 				//菜单
@@ -467,7 +469,10 @@
 				}
 				//播放样式
 				playStyle.addEventListener('click',function(e) {
-					this.firstChild.innerHTML = playStyleData[++kk%playStyleData.length].style;
+					kk = ++kk%playStyleData.length;
+					this.firstChild.innerHTML = playStyleData[kk].style;
+					listTitle.innerHTML = playStyleData[kk].style;
+					styleCtx.innerHTML = playStyleData[kk].ctx + "  ("+ len + ")";
 				});
 			},
 			startPlay : function() {
@@ -476,6 +481,37 @@
 				play.firstChild.innerHTML = "&#xe502;";
 				myMusic.currentTime = 0;
 				myMusic.play();
+			},
+			stylePlay : function(key,direction) {
+				switch(key){
+					case '0'://列表循环
+						if(direction){
+							ii = (++ii)%len;
+							this.title(ii);
+						}else{
+							ii = (ii<=0) ? len : ii;
+							this.title(--ii);
+						}
+						break;
+					case '1'://单曲循环
+						var temp = ii;
+						console.log(ii);
+						console.log("temp: "+temp);
+						break;
+					case '-1'://随机播放
+						var temp = parseInt(Math.random()*len);
+						if(ii == temp){
+							while(ii == temp){
+								ii = parseInt(Math.random()*len);
+							}
+						}else{
+							ii=temp;
+						}
+						this.title(ii);
+						break;
+					default:
+						break;
+				}
 			},
 			calculateTime : function (mTime) {
 				var musicTime = mTime;
@@ -525,13 +561,11 @@
 		};
 
 
-
 		window.onload = function() {
 			var a = new MusicPage();
 			a.init();
 			a.control();
 		}
-
 
 
 	</script>
