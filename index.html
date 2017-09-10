@@ -435,11 +435,13 @@
 				//上一首
 				pre.addEventListener("click",function() {
 					mine.stylePlay(playStyleData[kk].key,0);
+					mine.title(ii);
 					mine.startPlay();
 				});
 				//下一首
 				next.addEventListener("click",function() {
 					mine.stylePlay(playStyleData[kk].key,1);
+					mine.title(ii);
 					mine.startPlay();
 				});
 				//菜单
@@ -487,16 +489,12 @@
 					case '0'://列表循环
 						if(direction){
 							ii = (++ii)%len;
-							this.title(ii);
 						}else{
 							ii = (ii<=0) ? len : ii;
-							this.title(--ii);
+							ii -= 1;
 						}
 						break;
 					case '1'://单曲循环
-						var temp = ii;
-						console.log(ii);
-						console.log("temp: "+temp);
 						break;
 					case '-1'://随机播放
 						var temp = parseInt(Math.random()*len);
@@ -507,7 +505,6 @@
 						}else{
 							ii=temp;
 						}
-						this.title(ii);
 						break;
 					default:
 						break;
