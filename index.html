@@ -49,6 +49,7 @@
 			border: solid 1px black;
 			margin:0 auto;
 			border-radius: 50%;
+			animation: myfirst 20s linear infinite;
 		}
 		@keyframes myfirst
 		{
@@ -391,7 +392,7 @@
 				author.innerHTML = musicListData[i].author;
 				myMusic.src = musicListData[i].src;
 				this.progress();
-				coverbg.style.transform = "animation: myfirst 20s linear infinite;";
+				coverbg.style.animation = "myfirst 20s linear infinite;";
 			},
 			progress : function() {
 				var me = this;
