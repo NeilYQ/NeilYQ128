@@ -559,7 +559,8 @@
 		};
 
 
-		window.onload = function() {
+		window.onload = function(event) {
+  			event.preventDefault();
 			var a = new MusicPage();
 			a.init();
 			a.control();
