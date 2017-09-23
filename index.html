@@ -362,11 +362,13 @@
 		var page = document.getElementById("MusicPage");
 
 		//header
-		var title = document.getElementsByClassName("title")[0],
+		var myheader = document.getElementsByTagName("header")[0],
+			title = document.getElementsByClassName("title")[0],
 			author = document.getElementsByClassName("author")[0];
 
 		//coverbg
-		var coverbg = document.getElementsByClassName("box")[0];
+		var swiper = document.getElementsByClassName("swiper")[0],
+			coverbg = document.getElementsByClassName("box")[0];
 
 		//progress
 		var timer1 = document.getElementById("timer"),
@@ -430,6 +432,9 @@
 				page.style.height = window.innerHeight + "px";
 
 				//coverbg
+				swiper.style.height = (window.innerHeight - myheader.offsetHeight - window.innerHeight*0.3) + "px";
+				console.log(swiper.offsetHeight);
+				console.log(window.innerHeight);
 				coverbg.style.animationPlayState = "paused";  
 	    		coverbg.style.WebkitAnimationPlayState = "paused";// 针对 Chrome 和 Safari 的代码
 
@@ -722,7 +727,7 @@
 	  		b.init();
 	  		b.move();
 
-	  		
+
 		}
 
 
