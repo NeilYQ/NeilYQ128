@@ -433,8 +433,6 @@
 
 				//coverbg
 				swiper.style.height = (window.innerHeight - myheader.offsetHeight - window.innerHeight*0.3) + "px";
-				console.log(swiper.offsetHeight);
-				console.log(window.innerHeight);
 				coverbg.style.animationPlayState = "paused";  
 	    		coverbg.style.WebkitAnimationPlayState = "paused";// 针对 Chrome 和 Safari 的代码
 
@@ -516,9 +514,9 @@
 				mask.addEventListener("click",function() {
 					mask.style.display = "none";
 					musicListPage.style.transform = "translateY("+ window.innerHeight/2+"px)";
-					if(musicListPage.offsetTop===0){
-						musicListPage.style.display = "none";
-					}
+					setTimeout(function() {
+						mask.style.display = "none";
+					},1000);
 				});
 				//歌单点击事件
 				var li = document.querySelectorAll(".mlist ul li");
@@ -671,7 +669,7 @@
 				                endX = touch.pageX;
 				            }
 				            function touchEnd(event) {
-				                if ((startX - endX) > 50){
+				                if ((startX - endX) > 50) {
 									a.index==a.len-1?a.index:a.index++;
 						  			a.pageMove(a.index);
 				                }else if((endX - startX) > 50) {
