@@ -671,10 +671,10 @@
 				                endX = touch.pageX;
 				            }
 				            function touchEnd(event) {
-				                if ((startX - endX) > 10) {
+				                if ((startX - endX) > 50){
 									a.index==a.len-1?a.index:a.index++;
 						  			a.pageMove(a.index);
-				                }else if((endX - startX) > 10) {
+				                }else if((endX - startX) > 50) {
 									a.index==0?a.index:a.index--;
 						  			a.pageMove(a.index);
 				                }
