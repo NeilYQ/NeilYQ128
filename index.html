@@ -242,7 +242,6 @@
 			bottom: 0;
 			transform: translateY(335px);
 			transition: 1s;
-			display: none;
 		}
 		.mask{
 			width: 10rem;
@@ -504,11 +503,10 @@
 				});
 				//菜单
 				menu.addEventListener("click",function() {
-					musicListPage.style.display = "block";
 					musicListPage.style.transform = "translateY("+ 0 +")";
-					//setTimeout(function() {
-					mask.style.display = "block";
-					//},1000);
+					setTimeout(function() {
+						mask.style.display = "block";
+					},1000);
 				});
 				//遮幕
 				mask.addEventListener("click",function() {
